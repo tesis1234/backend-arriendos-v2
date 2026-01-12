@@ -69,6 +69,9 @@ app.get("/reverse-geocode", async (req, res) => {
     res.status(500).json({ error: "Error obteniendo dirección" });
   }
 });
+app.get("/", (req, res) => {
+  res.status(200).send("Backend Arriendos OK 🚀");
+});
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
