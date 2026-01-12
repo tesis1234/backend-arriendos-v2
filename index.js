@@ -12,7 +12,7 @@ const adminRoutes = require("./routes/admin.routes");
 
 const axios = require("axios");
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 app.use(
   cors({
