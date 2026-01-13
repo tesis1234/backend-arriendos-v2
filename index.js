@@ -77,11 +77,16 @@ app.get("/", (req, res) => {
 
 app.get("/test-db", async (req, res) => {
   try {
-    const [rows] = await db.query("SELECT 1 AS ok");
-    res.json({ db: "OK", rows });
+    const [rows] = await db.execute("SELECT 1 AS ok");
+    res.json({
+      db: "OK",
+      rows,
+    });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ db: "ERROR", error: err.message });
+    res.json({
+      db: "ERROR",
+      error: err.message,
+    });
   }
 });
 
