@@ -77,16 +77,16 @@ app.get("/", (req, res) => {
 
 app.get("/test-db", async (req, res) => {
   try {
-    const [rows] = await db.execute("SELECT 1 AS ok");
+    const [rows] = await db.execute("SELECT 1");
     res.json({
       db: "OK",
-      rows,
+      rows
     });
-  } catch (error) {
-    console.error("DB TEST ERROR:", error);
+  } catch (err) {
+    console.error("TEST DB ERROR FULL:", err);
     res.status(500).json({
       db: "ERROR",
-      error: error.message,
+      error: err || "UNKNOWN_ERROR"
     });
   }
 });
