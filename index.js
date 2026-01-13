@@ -74,7 +74,7 @@ app.get("/", (req, res) => {
 });
 app.get("/test-db", async (req, res) => {
   try {
-    const [rows] = await require("./db").query("SELECT 1 AS ok");
+    const [rows] = await require("./config/db").query("SELECT 1 AS ok");
     res.json({ db: "OK", rows });
   } catch (err) {
     console.error(err);
