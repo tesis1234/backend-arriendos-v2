@@ -1,4 +1,5 @@
 require("dotenv").config();
+const db = require("./config/db");
 const express = require("express");
 const cors = require("cors");
 const app = express();
@@ -72,15 +73,18 @@ app.get("/reverse-geocode", async (req, res) => {
 app.get("/", (req, res) => {
   res.status(200).send("Backend Arriendos OK 🚀");
 });
+
+
 app.get("/test-db", async (req, res) => {
   try {
-    const [rows] = await require("./config/db").query("SELECT 1 AS ok");
+    const [rows] = await db.query("SELECT 1 AS ok");
     res.json({ db: "OK", rows });
   } catch (err) {
     console.error(err);
     res.status(500).json({ db: "ERROR", error: err.message });
   }
 });
+
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
