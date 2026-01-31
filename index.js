@@ -17,7 +17,23 @@ const PORT = process.env.PORT  || 8080;
 
 app.use(
   cors({
-    origin: ["*"],
+    origin: function (origin, callback) {
+      // permitir requests sin origin (Postman, mobile, curl)
+      if (!origin) return callback(null, true);
+
+      const allowedOrigins = [
+        "http://localhost:8081",
+        "http://localhost:19006",
+        "https://app-arriendos.vercel.app"
+      ];
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
