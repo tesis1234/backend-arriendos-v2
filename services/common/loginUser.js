@@ -3,6 +3,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 async function loginUser({ email, password }) {
+  console.log("📩 BODY:", email);
+  console.log("👤 USERS:", users);
+  console.log("🔑 HASH DB:", user?.password);
   try {
     const [users] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
 
@@ -47,8 +50,13 @@ async function loginUser({ email, password }) {
     };
 
   } catch (error) {
-    return { success: false, message: error.message };
+    console.error("❌ LOGIN ERROR:", error);
+    return {
+      success: false,
+      message: error?.message || "Error interno en login",
+    };
   }
+
 }
 
 module.exports = { loginUser };
