@@ -4,25 +4,15 @@ const jwt = require('jsonwebtoken');
 
 async function loginUser({ email, password }) {
   try {
-    console.log('📩 LOGIN BODY:', { email, password });
-
-    const [users] = await db.query(
-      'SELECT * FROM usuarios WHERE email = ?',
-      [email]
-    );
-
-    console.log('📦 RESULTADO QUERY:', users);
+    const [users] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
 
     if (users.length === 0) {
-      console.log('❌ USUARIO NO ENCONTRADO');
       throw new Error('Usuario no encontrado');
     }
 
     const user = users[0];
-    console.log('👤 USER:', user);
 
     // BLOQUEAR USUARIOS INACTIVOS
-    console.log('🧩 ESTADO USUARIO:', user.estado);
     if (user.estado === "inactivo") {
       return {
         success: false,
@@ -30,16 +20,13 @@ async function loginUser({ email, password }) {
       };
     }
 
-    console.log('🔐 PASSWORD ENVIADA:', password);
-    console.log('🔐 HASH BD:', user.password);
-
+    // Verificar contraseña
     const passwordMatch = await bcrypt.compare(password, user.password);
-    console.log('✅ RESULTADO BCRYPT:', passwordMatch);
-
     if (!passwordMatch) {
       throw new Error('Contraseña incorrecta');
     }
 
+    // Crear token de acceso
     const token = jwt.sign(
       { id: user.id_usuario, email: user.email, tipo: user.tipo },
       process.env.JWT_SECRET || 'secreto123',
@@ -60,7 +47,8 @@ async function loginUser({ email, password }) {
     };
 
   } catch (error) {
-    console.error('🔥 ERROR LOGIN:', error.message);
     return { success: false, message: error.message };
   }
 }
+
+module.exports = { loginUser };
