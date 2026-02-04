@@ -40,6 +40,7 @@ const {
 } = require("../services/common/passwordResetService");
 
 router.post("/login", async (req, res) => {
+  console.log('🔥 ENTRO A LA RUTA LOGIN');
   const result = await loginUser(req.body);
   res.status(result.success ? 200 : 401).json(result);
 });
