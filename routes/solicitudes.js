@@ -4,6 +4,7 @@ const db = require("../config/db");
 
 router.post("/solicitudes", async (req, res) => {
   const { id_estudiante, id_propiedad, id_habitacion = null } = req.body;
+console.log("ID que estoy enviando:", id_estudiante);
 
   if (!id_estudiante || !id_propiedad) {
     return res.status(400).json({ error: "Faltan parámetros obligatorios" });

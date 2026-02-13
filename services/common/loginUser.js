@@ -3,8 +3,6 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 async function loginUser({ email, password }) {
-  console.log('🔥 LOGIN USER FILE VERSION FEB-2026');
-
   try {
     const [users] = await db.query('SELECT * FROM usuarios WHERE email = ?', [email]);
 

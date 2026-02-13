@@ -13,7 +13,7 @@ const getRoomsByUser = async (userId) => {
     ...row,
     imagenUrls: row.fotos
       ? JSON.parse(row.fotos).map(
-          (foto) => `https://backend-arriendos-production.up.railway.app/images/${foto}`
+          (foto) => `https://backend-arriendos-v2-production.up.railway.app/images/${foto}`
         )
       : [],
   }));

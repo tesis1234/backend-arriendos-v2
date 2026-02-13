@@ -9,7 +9,7 @@ const getResidencesByUser = async (userId) => {
     "URLs generadas:",
     rows.map((row) =>
       JSON.parse(row.fotos).map(
-        (foto) => `https://backend-arriendos-production.up.railway.app/images/${foto}`
+        (foto) => `https://backend-arriendos-v2-production.up.railway.app/images/${foto}`
       )
     )
   );
@@ -17,7 +17,7 @@ const getResidencesByUser = async (userId) => {
   return rows.map((row) => ({
     ...row,
     imagenUrls: JSON.parse(row.fotos).map(
-      (foto) => `https://backend-arriendos-production.up.railway.app/images/${foto}`
+      (foto) => `https://backend-arriendos-v2-production.up.railway.app/images/${foto}`
     ), // Maneja múltiples imágenes
   }));
 };
