@@ -30,7 +30,7 @@ const handlePasswordReset = async (req, res) => {
     );
 
     await resend.emails.send({
-      from: "Arriendos <onboarding@resend.dev>",
+      from: "Arriendos <tesisarriendo@gmail.com>",
       to: email,
       subject: "Contraseña temporal",
       html: `
