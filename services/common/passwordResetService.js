@@ -31,7 +31,7 @@ const handlePasswordReset = async (req, res) => {
 
 const result = await resend.emails.send({
   from: "onboarding@resend.dev",
-  to: email,
+  to: "tesisarriendo@gmail.com",
   subject: "Prueba",
   html: "<h1>Prueba correo</h1>",
 });
