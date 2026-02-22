@@ -29,17 +29,15 @@ const handlePasswordReset = async (req, res) => {
       [hashedPassword, email]
     );
 
-    await resend.emails.send({
-      from: "Arriendos <onboarding@resend.dev>",
-      to: email,
-      subject: "Contraseña temporal",
-      html: `
-    <h2>Restablecimiento de contraseña</h2>
-    <p>Tu contraseña temporal es:</p>
-    <h3>${tempPassword}</h3>
-    <p>Por favor, cámbiala después de iniciar sesión.</p>
-  `,
-    });
+const result = await resend.emails.send({
+  from: "onboarding@resend.dev",
+  to: email,
+  subject: "Prueba",
+  html: "<h1>Prueba correo</h1>",
+});
+
+console.log("RESEND RESULT:", result);
+
 
 
     res.status(200).json({ message: "La contraseña temporal fue enviada a tu correo." });
