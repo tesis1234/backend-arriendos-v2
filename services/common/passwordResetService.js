@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
-const pool = require("../../config/db"); 
-const transporter = require("../../config/mailer");
+const pool = require("../../config/db");
+const { Resend } = require("resend");
+const resend = new Resend(process.env.RESEND_API_KEY);
+
 
 function generateTemporaryPassword(length = 8) {
   const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -27,12 +29,18 @@ const handlePasswordReset = async (req, res) => {
       [hashedPassword, email]
     );
 
-    await transporter.sendMail({
-      from: `"Support - Arriendos" <${process.env.EMAIL_USER}>`,
+    await resend.emails.send({
+      from: "Arriendos <onboarding@resend.dev>",
       to: email,
-      subject: "Temporary Password",
-      text: `Tu contraseña temporal es: ${tempPassword}\n\nPor favor, cambiala después de iniciar sesión.`,
+      subject: "Contraseña temporal",
+      html: `
+    <h2>Restablecimiento de contraseña</h2>
+    <p>Tu contraseña temporal es:</p>
+    <h3>${tempPassword}</h3>
+    <p>Por favor, cámbiala después de iniciar sesión.</p>
+  `,
     });
+
 
     res.status(200).json({ message: "La contraseña temporal fue enviada a tu correo." });
   } catch (error) {
